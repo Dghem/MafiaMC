@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="MafiaMC Network — Player Profile" />
+    <meta name="theme-color" content="#dc2626" />
+    <title>MafiaMC — Profile</title>
+    <link rel="icon" href="https://i.ibb.co/6c0TFHT3/mafia-server.png" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/skinview3d@3.1.0/bundles/skinview3d.bundle.js"></script>
+    <style>
+        .profile-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 24px 80px;
+            position: relative;
+        }
+
+        .profile-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse at 50% 60%, rgba(220, 38, 38, 0.08) 0%, transparent 50%),
+                linear-gradient(180deg, #000 0%, #050505 100%);
+        }
+
+        .profile-back {
+            position: fixed;
+            top: 24px;
+            left: 40px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            transition: all 0.3s var(--ease);
+        }
+
+        .profile-back:hover {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--red-border);
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            animation: profileFadeIn 1s var(--ease) both;
+        }
+
+        @keyframes profileFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-skin {
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .profile-skin canvas {
+            border-radius: 16px;
+            cursor: grab;
+        }
+
+        .profile-skin canvas:active {
+            cursor: grabbing;
+        }
+
+        .profile-skin-hint {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .profile-skin-glow {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 40px;
+            background: radial-gradient(ellipse, rgba(220, 38, 38, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-role-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            padding: 6px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .profile-role-badge.owner {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #000;
+        }
+
+        .profile-role-badge.hadmin {
+            background: linear-gradient(135deg, #374151, #1f2937);
+            color: #d1d5db;
+        }
+
+        .profile-name {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .profile-name .name-white {
+            color: var(--white);
+        }
+
+        .profile-name .name-owner-shiny {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24, #fde68a, #fbbf24, #f59e0b);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: ownerShine 3s linear infinite;
+        }
+
+        @keyframes ownerShine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .profile-discord {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #5865F2;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 6px 14px;
+            border-radius: 100px;
+            background: rgba(88, 101, 242, 0.08);
+            border: 1px solid rgba(88, 101, 242, 0.15);
+        }
+
+        .profile-description {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 32px;
+            max-width: 420px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .profile-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 14px;
+            text-align: center;
+            transition: all 0.3s var(--ease);
+        }
+
+        .profile-stat:hover {
+            border-color: var(--red-border);
+            transform: translateY(-2px);
+        }
+
+        .profile-stat-value {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .profile-stat-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .profile-links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .profile-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 20px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: all 0.3s var(--ease);
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-secondary);
+        }
+
+        .profile-link-btn:hover {
+            border-color: var(--red-border);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-link-btn.primary {
+            background: var(--red);
+            border-color: var(--red);
+            color: var(--white);
+        }
+
+        .profile-link-btn.primary:hover {
+            background: var(--red-light);
+            box-shadow: 0 8px 24px var(--red-glow);
+        }
+
+        .profile-link-btn.discord-btn {
+            background: rgba(88, 101, 242, 0.08);
+            border-color: rgba(88, 101, 242, 0.2);
+            color: #7289da;
+        }
+
+        .profile-link-btn.discord-btn:hover {
+            background: #5865F2;
+            border-color: #5865F2;
+            color: white;
+        }
+
+        .profile-link-btn.paypal-btn {
+            background: rgba(0, 112, 186, 0.06);
+            border-color: rgba(0, 112, 186, 0.15);
+            color: #0070ba;
+        }
+
+        .profile-link-btn.paypal-btn:hover {
+            background: #0070ba;
+            border-color: #0070ba;
+            color: white;
+        }
+
+        .profile-link-btn.website-btn {
+            border-color: var(--red-border);
+            color: var(--red-light);
+        }
+
+        .profile-link-btn.website-btn:hover {
+            background: var(--red);
+            border-color: var(--red);
+            color: white;
+        }
+
+        /* Client Section */
+        .profile-client {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .profile-client-logo {
+            display: none;
+        }
+
+        .profile-client-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-right: 4px;
+        }
+
+        .profile-client-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        @media screen and (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-description {
+                margin: 0 auto 32px;
+            }
+
+            .profile-links-grid {
+                justify-content: center;
+            }
+
+            .profile-back {
+                top: 16px;
+                left: 16px;
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-bg"></div>
+
+    <a href="index.html" class="profile-back">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+
+    <main class="profile-page">
+        <div class="profile-container" id="profile-container">
+            <div class="profile-skin" id="profile-skin">
+                <canvas id="skin-canvas"></canvas>
+                <div class="profile-skin-hint"><i class="fas fa-arrows-alt"></i> Drag to rotate</div>
+                <div class="profile-skin-glow"></div>
+            </div>
+            <div class="profile-info" id="profile-info">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const PLAYERS = {
+            'dghem': {
+                name: 'Dghem',
+                role: 'OWNER',
+                roleClass: 'owner',
+                nameClass: 'name-owner-shiny',
+                skinUser: 'Dghem',
+                discord: 'viromic',
+                client: {
+                    name: 'LabyMod',
+                    color: '#00a0e3'
+                },
+                description: 'The Founder, The Creator, The Developer of MafiaMC Network.',
+                stats: [
+                    { value: 'Owner', label: 'Role' },
+                    { value: '2021', label: 'Joined Since' },
+                    { value: '#1', label: 'Rank' }
+                ],
+                links: [
+                    { icon: 'fas fa-home', label: 'Home', href: 'index.html', class: 'primary' },
+                    { icon: 'fas fa-globe', label: 'Website', href: 'https://www.dghem.site/', class: 'website-btn', target: '_blank' },
+                    { icon: 'fab fa-discord', label: 'Discord', href: 'https://discord.com/invite/ryd6yEQE4Q', class: 'discord-btn', target: '_blank' },
+                    { icon: 'fab fa-paypal', label: 'Donate', href: 'https://www.paypal.com/paypalme/adghem', class: 'paypal-btn', target: '_blank' },
+                    { icon: 'fas fa-link', label: 'Guns.lol', href: 'https://guns.lol/dghem', class: '', target: '_blank' }
+                ]
+            },
+            'immosta': {
+                name: 'ImMosta',
+                role: 'HEAD ADMIN',
+                roleClass: 'hadmin',
+                nameClass: 'name-white',
+                skinUser: 'saeedMaybe',
+                discord: 'hhbhnb',
+                client: {
+                    name: 'CM Client',
+                    color: '#f59e0b'
+                },
+                description: 'Head Administrator of MafiaMC Network, Staffs Supervisor. Managing the server & staffs and keeping the community thriving.',
+                stats: [
+                    { value: 'H.Admin', label: 'Role' },
+                    { value: '2024', label: 'Joined Since' },
+                    { value: '#2', label: 'Rank' }
+                ],
+                links: [
+                    { icon: 'fas fa-home', label: 'Home', href: 'index.html', class: 'primary' },
+                    { icon: 'fab fa-discord', label: 'Discord', href: 'https://discord.gg/DKEdc8EwtG', class: 'discord-btn', target: '_blank' }
+                ]
+            }
+        };
+
+        function loadProfile() {
+            const params = new URLSearchParams(window.location.search);
+            const playerKey = (params.get('player') || '').toLowerCase();
+            const player = PLAYERS[playerKey];
+
+            if (!player) {
+                document.getElementById('profile-info').innerHTML = `
+                    <h2 class="profile-name"><span class="name-white">Player Not Found</span></h2>
+                    <p class="profile-description">This player profile does not exist.</p>
+                    <a href="index.html" class="profile-link-btn primary"><i class="fas fa-home"></i> Go Home</a>
+                `;
+                return;
+            }
+
+            document.title = `MafiaMC — ${player.name}`;
+
+            // Initialize skinview3d
+            const isMobile = window.innerWidth <= 768;
+            try {
+                const canvas = document.getElementById('skin-canvas');
+                const skinViewer = new skinview3d.SkinViewer({
+                    canvas: canvas,
+                    width: isMobile ? 280 : 320,
+                    height: isMobile ? 420 : 480,
+                    skin: `https://mineskin.eu/skin/${player.skinUser}`
+                });
+
+                // Load OptiFine cape via weserv.nl image proxy (handles CORS properly)
+                const capeUrl = `https://images.weserv.nl/?url=s.optifine.net/capes/${player.skinUser}.png`;
+                skinViewer.loadCape(capeUrl, { backEquipment: "cape" })
+                    .then(() => console.log('OptiFine cape loaded successfully!'))
+                    .catch(e => console.warn('OptiFine cape not available for', player.skinUser));
+
+                skinViewer.autoRotate = false;
+                skinViewer.zoom = 0.85;
+                skinViewer.fov = 50;
+                skinViewer.globalLight = 1.2;
+                skinViewer.cameraLight = 0.8;
+
+                // Walking animation
+                skinViewer.animation = new skinview3d.WalkingAnimation();
+                skinViewer.animation.speed = 0.6;
+
+                // Enable user rotation
+                skinViewer.controls.enableRotate = true;
+                skinViewer.controls.enableZoom = false;
+                skinViewer.controls.enablePan = false;
+
+            } catch (err) {
+                console.error('Skinview3D error:', err);
+                // Fallback to 2D image
+                const canvas = document.getElementById('skin-canvas');
+                canvas.style.display = 'none';
+                const img = document.createElement('img');
+                img.src = `https://starlightskins.lunareclipse.studio/render/walking/${player.skinUser}/full`;
+                img.alt = player.name;
+                img.style.height = isMobile ? '300px' : '400px';
+                img.style.filter = 'drop-shadow(0 20px 60px rgba(220, 38, 38, 0.2))';
+                document.getElementById('profile-skin').prepend(img);
+            }
+
+            // Stats HTML
+            let statsHTML = '';
+            player.stats.forEach(s => {
+                statsHTML += `
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">${s.value}</div>
+                        <div class="profile-stat-label">${s.label}</div>
+                    </div>
+                `;
+            });
+
+            // Links HTML
+            let linksHTML = '';
+            player.links.forEach(l => {
+                const target = l.target ? `target="${l.target}"` : '';
+                linksHTML += `<a href="${l.href}" ${target} class="profile-link-btn ${l.class}"><i class="${l.icon}"></i> ${l.label}</a>`;
+            });
+
+            // Client HTML
+            let clientHTML = '';
+            if (player.client) {
+                clientHTML = `
+                    <div class="profile-client">
+                        <span class="profile-client-name" style="color: ${player.client.color}">${player.client.name}</span>
+                    </div>
+                `;
+            }
+
+            const nameClass = player.nameClass || 'name-white';
+
+            document.getElementById('profile-info').innerHTML = `
+                <span class="profile-role-badge ${player.roleClass}">${player.role}</span>
+                <h1 class="profile-name"><span class="${nameClass}">${player.name}</span></h1>
+                <div class="profile-discord"><i class="fab fa-discord"></i> ${player.discord}</div>
+                ${clientHTML}
+                <p class="profile-description">${player.description}</p>
+                <div class="profile-stats">${statsHTML}</div>
+                <div class="profile-links-grid">${linksHTML}</div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', loadProfile);
+    </script>
+</body>
+
+</html>
