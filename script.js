@@ -43,8 +43,7 @@ function showNotification(message, type = 'success') {
 function copyIP(btn) {
     const ip = 'MafiaMC.net';
     navigator.clipboard.writeText(ip).then(() => {
-        const isAr = document.documentElement.lang === 'ar';
-        showNotification(isAr ? 'تم نسخ الـ IP!' : 'IP copied to clipboard!', 'success');
+        showNotification('IP copied to clipboard!', 'success');
 
         // Checkmark animation on the clicked button
         if (btn) {
@@ -384,15 +383,11 @@ function initRatingModal() {
 
     let selectedRating = 0;
     const labels = ['', 'Terrible', 'Bad', 'Average', 'Good', 'Excellent!'];
-    const isAr = () => document.documentElement.lang === 'ar';
 
     function openModal() {
         // Check 24hr cooldown
         if (!canRate()) {
-            showNotification(
-                isAr() ? 'يمكنك التقييم مرة واحدة كل 24 ساعة!' : 'You can only rate once every 24 hours!',
-                'warning'
-            );
+            showNotification('You can only rate once every 24 hours!', 'warning');
             return;
         }
         modal.classList.add('active');
@@ -461,24 +456,21 @@ function initRatingModal() {
             const review = document.getElementById('rating-review').value.trim();
 
             if (selectedRating === 0) {
-                showNotification(isAr() ? 'الرجاء اختيار تقييم أولاً!' : 'Please select a rating first!', 'warning');
+                showNotification('Please select a rating first!', 'warning');
                 return;
             }
             if (!username) {
-                showNotification(isAr() ? 'الرجاء إدخال اسمك!' : 'Please enter your username!', 'warning');
+                showNotification('Please enter your username!', 'warning');
                 return;
             }
             if (!review) {
-                showNotification(isAr() ? 'الرجاء كتابة تقييمك!' : 'Please write your review!', 'warning');
+                showNotification('Please write your review!', 'warning');
                 return;
             }
 
             // Block reserved usernames
             if (BLOCKED_USERNAMES.includes(username.toLowerCase())) {
-                showNotification(
-                    isAr() ? 'لا يمكنك استخدام هذا الاسم!' : 'This username is not allowed!',
-                    'error'
-                );
+                showNotification('This username is not allowed!', 'error');
                 return;
             }
 
@@ -490,7 +482,7 @@ function initRatingModal() {
 
             if (ratingForm) ratingForm.style.display = 'none';
             if (ratingSuccess) ratingSuccess.classList.add('active');
-            showNotification(isAr() ? 'شكراً على تقييمك!' : 'Thank you for your rating!', 'success');
+            showNotification('Thank you for your rating!', 'success');
             setTimeout(closeModal, 2500);
         });
     }
@@ -665,27 +657,8 @@ function initProtection() {
 // INITIALIZE
 // ========================================
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.protocol === 'file:') {
-        document.title = "Access Denied";
-        const e = document.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
-        if (e) e.remove();
-        const t = document.createElement('link');
-        t.rel = 'icon';
-        t.href = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">⚠️</text></svg>';
-        document.head.appendChild(t);
-
-        document.body.innerHTML = `
-        <div style="min-height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #f9fafb; color: #111827; font-family: system-ui, -apple-system, sans-serif; text-align: center; padding: 2rem; margin: 0; position: fixed; inset: 0; z-index: 999999; box-sizing: border-box;">
-            <svg style="width: 64px; height: 64px; color: #ef4444; margin-bottom: 1.5rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            <h1 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; margin-top: 0;">File Protocol is Disabled</h1>
-            <p style="color: #4b5563; max-width: 28rem; line-height: 1.5; margin-bottom: 2rem; margin-top: 0;">For security reasons and to ensure all features function correctly, this website cannot be run directly from a local file.</p>
-            <a href="https://mafiamc.net" style="background-color: #2563eb; color: white; text-decoration: none; padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 500; font-size: 0.875rem;">Go to Official Website</a>
-        </div>
-        `;
-        return;
-    }
+    // File protocol protection temporarily disabled
+    // if (window.location.protocol === 'file:') { ... }
 
     initNavbar();
     initHeroZoom();
