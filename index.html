@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/skinview3d@3.1.0/bundles/skinview3d.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad" async defer></script>
 
     <script type="application/ld+json">
     {
@@ -44,6 +45,25 @@
 </head>
 
 <body>
+    <!-- Cloudflare Turnstile Verification Overlay -->
+    <div id="cf-overlay">
+        <div class="cf-bg-glow cf-bg-glow-1"></div>
+        <div class="cf-bg-glow cf-bg-glow-2"></div>
+        <div class="cf-particles" id="cf-particles"></div>
+
+        <div class="cf-card" id="cf-card">
+            <img src="https://i.ibb.co/6c0TFHT3/mafia-server.png" alt="MafiaMC" class="cf-logo" />
+            <div class="cf-success-icon"><i class="fas fa-check"></i></div>
+            <div class="cf-title"><span>Mafia</span>MC Network</div>
+            <div id="turnstile-widget"></div>
+            <div class="cf-status" id="cf-status">
+                <div class="cf-spinner"></div>
+                <span>Verifying your connection...</span>
+            </div>
+            <div class="cf-footer">Protected by Cloudflare</div>
+        </div>
+    </div>
+
     <!-- Main Full-Screen Loader -->
     <div id="main-loader" class="main-loader">
         <div class="main-loader-content">
