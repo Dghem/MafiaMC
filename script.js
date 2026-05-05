@@ -673,7 +673,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </svg>
             <h1 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; margin-top: 0;">File Protocol is Disabled</h1>
             <p style="color: #4b5563; max-width: 28rem; line-height: 1.5; margin-bottom: 2rem; margin-top: 0;">For security reasons and to ensure all features function correctly, this website cannot be run directly from a local file.</p>
-            <a href="https://dghem.site" style="background-color: #2563eb; color: white; text-decoration: none; padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 500; font-size: 0.875rem;">Go to Official Website</a>
+            <a href="https://mafiamc.net" style="background-color: #2563eb; color: white; text-decoration: none; padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 500; font-size: 0.875rem;">Go to Official Website</a>
         </div>
         `;
         return;
