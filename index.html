@@ -46,7 +46,7 @@
 
 <body>
     <!-- Cloudflare Turnstile Verification Overlay -->
-    <div id="cf-overlay" style="display: none !important;">
+    <div id="cf-overlay">
         <style>
             #cf-overlay {
                 position: fixed;
@@ -231,11 +231,62 @@
     </div>
 
     <script>
-        // Cloudflare verification temporarily disabled
-        (function () {
-            var overlay = document.getElementById('cf-overlay');
-            if (overlay) overlay.style.display = 'none';
-        })();
+        // Cloudflare Turnstile Logic
+        function onTurnstileLoad() {
+            const overlay = document.getElementById('cf-overlay');
+            const statusEl = document.getElementById('cf-status');
+            const card = document.getElementById('cf-card');
+            
+            // Check if already verified
+            const storedToken = localStorage.getItem('cf_verify_token');
+            if (storedToken) {
+                fetch('/api/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'check', storedToken })
+                }).then(res => res.json()).then(data => {
+                    if (data.valid) {
+                        overlay.style.display = 'none';
+                    } else {
+                        localStorage.removeItem('cf_verify_token');
+                        renderWidget();
+                    }
+                }).catch(() => renderWidget());
+            } else {
+                renderWidget();
+            }
+
+            function renderWidget() {
+                turnstile.render('#turnstile-widget', {
+                    sitekey: '0x4AAAAAAAcfWqf3Z4XqZ4Xq', // Replace with your actual sitekey
+                    callback: function(token) {
+                        statusEl.innerHTML = '<div class="cf-spinner"></div><span>Verifying token with server...</span>';
+                        fetch('/api/verify', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: 'verify', token })
+                        }).then(r => r.json()).then(data => {
+                            if (data.verified) {
+                                localStorage.setItem('cf_verify_token', data.token);
+                                statusEl.innerHTML = '<div class="cf-success-icon" style="display:flex;color:#10b981;font-size:1.2rem;margin-right:8px;"><i class="fas fa-check"></i></div><span style="color:#10b981">Verification successful</span>';
+                                card.classList.add('verified');
+                                setTimeout(() => {
+                                    overlay.classList.add('cf-done');
+                                    setTimeout(() => overlay.style.display = 'none', 600);
+                                }, 800);
+                            } else {
+                                statusEl.innerHTML = '<span style="color:#dc2626;">Verification failed. Please refresh.</span>';
+                            }
+                        }).catch(() => {
+                            statusEl.innerHTML = '<span style="color:#dc2626;">Server error. Please refresh.</span>';
+                        });
+                    },
+                    'error-callback': function() {
+                        statusEl.innerHTML = '<span style="color:#dc2626;">Widget error. Please refresh.</span>';
+                    }
+                });
+            }
+        }
     </script>
 
     <!-- Main Full-Screen Loader -->
