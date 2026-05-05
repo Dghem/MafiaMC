@@ -29,7 +29,6 @@
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="style.css" />
-    <script src="lang.js"></script>
     <script src="https://unpkg.com/skinview3d@3.1.0/bundles/skinview3d.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad" async defer></script>
@@ -46,6 +45,9 @@
 </head>
 
 <body>
+
+
+    <body>
     <!-- Main Full-Screen Loader -->
     <div id="main-loader" class="main-loader">
         <div class="main-loader-content">
@@ -391,22 +393,23 @@
         })();
     </script>
     <!-- Navigation -->
+
+    <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#" class="nav-logo">
+            <a href="https://www.mafiamc.net" class="nav-logo">
                 <img src="https://i.ibb.co/6c0TFHT3/mafia-server.png" alt="MafiaMC" class="logo-img" />
             </a>
 
             <div class="nav-links" id="nav-links">
-                <a href="#home" class="nav-link" data-i18n="nav.home">Home</a>
-                <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
-                <a href="#team" class="nav-link" data-i18n="nav.team">Team</a>
-                <a href="#games" class="nav-link" data-i18n="nav.games">Games</a>
-                <a href="#ratings" class="nav-link" data-i18n="nav.ratings">Ratings</a>
-                <a href="#vote" class="nav-link" data-i18n="nav.vote">Vote</a>
-                <a href="https://store.mafiamc.net" class="nav-link" data-i18n="nav.store">Store</a>
-                <a href="https://discord.gg/DKEdc8EwtG" target="_blank" class="nav-link"
-                    data-i18n="nav.discord">Discord</a>
+                <a href="#home" class="nav-link">Home</a>
+                <a href="https://store.mafiamc.net" class="nav-link" target="_blank">Store</a>
+                <a href="https://discord.gg/DKEdc8EwtG" target="_blank" class="nav-link">Discord</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#team" class="nav-link">Team</a>
+                <a href="#games" class="nav-link">Games</a>
+                <a href="#vote" class="nav-link">Vote</a>
+                <a href="#ratings" class="nav-link">Ratings</a>
             </div>
 
             <div class="nav-right">
@@ -438,11 +441,11 @@
             <div class="hero-bg-overlay"></div>
         </div>
         <div class="hero-content">
-            <div class="hero-badge" data-i18n="hero.badge">MINECRAFT NETWORK</div>
+            <div class="hero-badge">MINECRAFT NETWORK</div>
             <h1 class="hero-title">
                 <span class="title-mafia">Mafia</span><span class="title-mc">MC</span>
             </h1>
-            <p class="hero-subtitle" data-i18n="hero.subtitle">The Best PvP Experience</p>
+            <p class="hero-subtitle">The Best PvP Experience</p>
             <div class="hero-ip-widget" id="hero-ip-widget">
                 <i class="fas fa-server"></i>
                 <span class="hero-ip-text">MafiaMC.net</span>
@@ -456,29 +459,49 @@
         </div>
     </section>
 
-    <!-- Big Statement -->
-    <section class="statement-section" id="about">
-        <div class="statement-content">
-            <h2 class="statement-text">
-                <span class="statement-red" data-i18n="about.title1">Enjoy the PvP</span>
-                <span class="statement-white" data-i18n="about.title2">experience.</span>
-            </h2>
-        </div>
-    </section>
-
-    <!-- Video / About Banner -->
+    <!-- 3D Logo Section (no text) -->
     <section class="cinematic-section">
         <div class="cinematic-banner">
             <div class="cinematic-overlay"></div>
             <div class="cinematic-inner">
                 <div id="logo-3d-container" class="cinematic-logo-3d"></div>
-                <p class="cinematic-tagline">Explore the world of MafiaMC with full freedom of play.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Discord + Store Banners -->
+    <section class="section banners-section">
+        <div class="section-inner">
+            <div class="banner-row">
+                <a href="https://discord.gg/DKEdc8EwtG" target="_blank"
+                    class="banner-card discord-banner-card fade-in-right">
+                    <div class="banner-card-overlay"></div>
+                    <div class="banner-card-content">
+                        <i class="fab fa-discord banner-icon"></i>
+                        <div>
+                            <h3>Join Our Community</h3>
+                            <p>Connect with players, get updates, and have fun!</p>
+                        </div>
+                    </div>
+                    <div class="banner-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
+                <a href="https://store.mafiamc.net" class="banner-card store-banner-card fade-in-left">
+                    <div class="banner-card-overlay"></div>
+                    <div class="banner-card-content">
+                        <i class="fas fa-shopping-bag banner-icon"></i>
+                        <div>
+                            <h3>Visit Our Store</h3>
+                            <p>Get exclusive ranks, kits, and items.</p>
+                        </div>
+                    </div>
+                    <div class="banner-arrow"><i class="fas fa-arrow-right"></i></div>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Server Info Section -->
-    <section class="section server-info-section">
+    <section class="section server-info-section" id="about">
         <div class="section-inner">
             <div class="section-header-row">
                 <div class="section-header-left">
@@ -489,14 +512,14 @@
             <div class="info-grid">
                 <div class="info-tile">
                     <div class="info-tile-icon"><i class="fas fa-wrench"></i></div>
-                    <h3 data-i18n="info.status">Status</h3>
+                    <h3>Status</h3>
                     <div class="info-tile-value status-maintenance">
-                        <span class="status-dot-sm"></span> <span data-i18n="info.maintenance">Maintenance</span>
+                        <span class="status-dot-sm"></span> <span>Maintenance</span>
                     </div>
                 </div>
                 <div class="info-tile">
                     <div class="info-tile-icon"><i class="fas fa-cube"></i></div>
-                    <h3 data-i18n="info.version">Version</h3>
+                    <h3>Version</h3>
                     <div class="info-tile-value">1.8 - 1.21</div>
                 </div>
                 <div class="info-tile">
@@ -535,7 +558,7 @@
                 <div class="progress-track">
                     <div class="progress-fill" data-progress="80"></div>
                 </div>
-                <p class="maintenance-note" data-i18n="info.maintenancenote">Server is under Maintenance — Next step is
+                <p class="maintenance-note">Server is under Maintenance — Next step is
                     coming..</p>
             </div>
         </div>
@@ -546,7 +569,7 @@
         <div class="statement-content">
             <h2 class="statement-text">
                 <span class="statement-red">Meet the</span>
-                <span class="statement-white">team.</span>
+                <span class="statement-white">Team</span>
             </h2>
         </div>
     </section>
@@ -564,8 +587,8 @@
                 <!-- Dghem -->
                 <a href="profile.html?player=Dghem" class="team-card">
                     <div class="team-card-img">
-                        <img src="https://starlightskins.lunareclipse.studio/render/walking/Dghem/full" alt="Dghem"
-                            loading="lazy" />
+                        <img loading="lazy" src="https://starlightskins.lunareclipse.studio/render/walking/Dghem/full"
+                            alt="Dghem" loading="lazy" />
                     </div>
                     <div class="team-card-info">
                         <h3>Dghem</h3>
@@ -575,7 +598,8 @@
                 <!-- ImMosta -->
                 <a href="profile.html?player=ImMosta" class="team-card">
                     <div class="team-card-img">
-                        <img src="https://starlightskins.lunareclipse.studio/render/walking/saeedMaybe/full"
+                        <img loading="lazy"
+                            src="https://starlightskins.lunareclipse.studio/render/walking/saeedMaybe/full"
                             alt="ImMosta" loading="lazy" />
                     </div>
                     <div class="team-card-info">
@@ -592,8 +616,8 @@
         <div class="section-inner">
             <div class="section-header-row">
                 <div class="section-header-left">
-                    <h2 class="section-title-hitman" data-i18n="games.title">Server Games</h2>
-                    <p class="section-desc-hitman" data-i18n="games.desc">Choose your battlefield.</p>
+                    <h2 class="section-title-hitman">Server Games</h2>
+                    <p class="section-desc-hitman">Choose your battlefield.</p>
                 </div>
             </div>
             <div class="games-grid">
@@ -605,8 +629,8 @@
                         <div class="game-card-status-badge"><span class="status-dot maintenance"></span> <span
                                 class="status-live-text" style="color:#f59e0b;">MAINTENANCE</span></div>
                     </div>
-                    <h3 class="game-card-title" data-i18n="game.redpvp">RedPvP</h3>
-                    <p class="game-card-desc" data-i18n="game.redpvp.desc">Collect some Redstone and buy axes to be
+                    <h3 class="game-card-title">RedPvP</h3>
+                    <p class="game-card-desc">Collect some Redstone and buy axes to be
                         the top #1</p>
                     <div class="game-card-tags">
                         <span class="game-tag"><i class="fas fa-users"></i> PvP</span>
@@ -622,51 +646,18 @@
                             alt="Duels" />
                         <div class="game-card-status-badge">
                             <span class="status-dot soon"></span>
-                            <span class="status-live-text" style="color: var(--text-muted);"
-                                data-i18n="game.soon">COMING SOON</span>
+                            <span class="status-live-text" style="color: var(--text-muted);">COMING SOON</span>
                         </div>
                     </div>
-                    <h3 class="game-card-title" data-i18n="game.duels">Duels</h3>
-                    <p class="game-card-desc" data-i18n="game.duels.desc">Face your opponents in 1v1 combat. Show your
+                    <h3 class="game-card-title">Duels</h3>
+                    <p class="game-card-desc">Face your opponents in 1v1 combat. Show your
                         skills and climb the leaderboard.</p>
                     <div class="game-card-tags">
                         <span class="game-tag"><i class="fas fa-crosshairs"></i> PvP 1vs1</span>
                         <span class="game-tag"><i class="fas fa-clock"></i> Soon</span>
                     </div>
-                    <div class="game-coming-label" data-i18n="game.staytuned">STAY TUNED</div>
+                    <div class="game-coming-label">STAY TUNED</div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Discord + Store Banners -->
-    <section class="section banners-section">
-        <div class="section-inner">
-            <div class="banner-row">
-                <a href="https://discord.gg/DKEdc8EwtG" target="_blank"
-                    class="banner-card discord-banner-card fade-in-right">
-                    <div class="banner-card-overlay"></div>
-                    <div class="banner-card-content">
-                        <i class="fab fa-discord banner-icon"></i>
-                        <div>
-                            <h3 data-i18n="discord.title">Join Our Community</h3>
-                            <p data-i18n="discord.desc">Connect with players, get updates, and have fun!</p>
-                        </div>
-                    </div>
-                    <div class="banner-arrow"><i class="fas fa-arrow-right"></i></div>
-                </a>
-                <a href="https://store.mafiamc.net" class="banner-card store-banner-card fade-in-left">
-                    <div class="banner-card-overlay"></div>
-                    <div class="banner-card-content">
-                        <i class="fas fa-shopping-bag banner-icon"></i>
-                        <div>
-                            <h3 data-i18n="store.title">Visit Our Store</h3>
-                            <p data-i18n="store.desc">Get exclusive ranks, kits, and items.</p>
-                        </div>
-                    </div>
-                    <div class="banner-arrow"><i class="fas fa-arrow-right"></i></div>
-                </a>
-
             </div>
         </div>
     </section>
@@ -676,14 +667,14 @@
         <div class="section-inner">
             <div class="section-header-row">
                 <div class="section-header-left">
-                    <h2 class="section-title-hitman" data-i18n="vote.title">Vote for Server</h2>
-                    <p class="section-desc-hitman" data-i18n="vote.desc">Support MafiaMC by voting on these sites!</p>
+                    <h2 class="section-title-hitman">Vote for Server</h2>
+                    <p class="section-desc-hitman">Support MafiaMC by voting on these sites!</p>
                 </div>
             </div>
             <div class="voting-grid">
                 <a href="https://minecraft-mp.com/server/356797/vote/" target="_blank" class="vote-card"
                     style="--site-color: #10b981;">
-                    <div class="vote-card-icon"><img
+                    <div class="vote-card-icon"><img loading="lazy"
                             src="https://www.google.com/s2/favicons?domain=minecraft-mp.com&sz=128" alt="Minecraft-MP"
                             class="vote-logo"></div>
                     <h3>Minecraft-MP</h3>
@@ -692,7 +683,7 @@
                 </a>
                 <a href="https://minecraftservers.org/vote/686347" target="_blank" class="vote-card"
                     style="--site-color: #b0b3b6;">
-                    <div class="vote-card-icon"><img
+                    <div class="vote-card-icon"><img loading="lazy"
                             src="https://www.google.com/s2/favicons?domain=minecraftservers.org&sz=128" alt="MC Servers"
                             class="vote-logo"></div>
                     <h3>MC Servers</h3>
@@ -701,15 +692,16 @@
                 </a>
                 <a href="https://www.minerank.com/mafiamc/vote#vote-now" target="_blank" class="vote-card"
                     style="--site-color: #1d6e0d;">
-                    <div class="vote-card-icon"><img src="https://www.google.com/s2/favicons?domain=minerank.com&sz=128"
-                            alt="MineRank" class="vote-logo"></div>
+                    <div class="vote-card-icon"><img loading="lazy"
+                            src="https://www.google.com/s2/favicons?domain=minerank.com&sz=128" alt="MineRank"
+                            class="vote-logo"></div>
                     <h3>MineRank</h3>
                     <p>Vote now!</p>
                     <div class="vote-arrow"><i class="fas fa-arrow-right"></i></div>
                 </a>
                 <a href="https://minecraft-serverlist.com/server/4893/vote" target="_blank" class="vote-card"
                     style="--site-color: #022492;">
-                    <div class="vote-card-icon"><img
+                    <div class="vote-card-icon"><img loading="lazy"
                             src="https://www.google.com/s2/favicons?domain=minecraft-serverlist.com&sz=128"
                             alt="MC ServerList" class="vote-logo"></div>
                     <h3>MC ServerList</h3>
@@ -718,7 +710,7 @@
                 </a>
                 <a href="https://minecraft.menu/server-mafiamc.6187/vote" target="_blank" class="vote-card"
                     style="--site-color: #c20515;">
-                    <div class="vote-card-icon"><img
+                    <div class="vote-card-icon"><img loading="lazy"
                             src="https://www.google.com/s2/favicons?domain=minecraft.menu&sz=128" alt="Minecraft Menu"
                             class="vote-logo"></div>
                     <h3>Minecraft Menu</h3>
@@ -727,7 +719,7 @@
                 </a>
                 <a href="https://craftlist.org/mafiamc" target="_blank" class="vote-card"
                     style="--site-color: #109ada;">
-                    <div class="vote-card-icon"><img
+                    <div class="vote-card-icon"><img loading="lazy"
                             src="https://www.google.com/s2/favicons?domain=craftlist.org&sz=128" alt="Craftlist"
                             class="vote-logo"></div>
                     <h3>Craftlist</h3>
@@ -736,7 +728,7 @@
                 </a>
                 <a href="https://minecraft-server-list.com/server/519358/vote/" target="_blank" class="vote-card"
                     style="--site-color: #e2750f;">
-                    <div class="vote-card-icon"><img
+                    <div class="vote-card-icon"><img loading="lazy"
                             src="https://www.google.com/s2/favicons?domain=minecraft-server-list.com&sz=128"
                             alt="MC Server List" class="vote-logo"></div>
                     <h3>MC Server List</h3>
@@ -752,8 +744,8 @@
         <div class="section-inner">
             <div class="section-header-row">
                 <div class="section-header-left">
-                    <h2 class="section-title-hitman" data-i18n="ratings.title">Player Ratings</h2>
-                    <p class="section-desc-hitman" data-i18n="ratings.desc">What our players say about MafiaMC.</p>
+                    <h2 class="section-title-hitman">Player Ratings</h2>
+                    <p class="section-desc-hitman">What our players say about MafiaMC.</p>
                 </div>
             </div>
             <div class="ratings-scroll-wrapper">
@@ -765,7 +757,7 @@
                         </div>
                         <p class="rating-text">"موقع اسطوري وتعاملهم جميل"</p>
                         <div class="rating-user-row">
-                            <img src="https://mc-heads.net/avatar/cfxw/40" alt="Danger" />
+                            <img loading="lazy" src="https://mc-heads.net/avatar/cfxw/40" alt="Danger" />
                             <span>Danger</span>
                         </div>
                     </div>
@@ -776,7 +768,7 @@
                         </div>
                         <p class="rating-text">"Great work"</p>
                         <div class="rating-user-row">
-                            <img src="https://mc-heads.net/avatar/FamousHuxted/40" alt="FamousHuxted" />
+                            <img loading="lazy" src="https://mc-heads.net/avatar/FamousHuxted/40" alt="FamousHuxted" />
                             <span>FamousHuxted</span>
                         </div>
                     </div>
@@ -787,7 +779,7 @@
                         </div>
                         <p class="rating-text">"Not a normal server, many axes, bigger map, nice grind areas."</p>
                         <div class="rating-user-row">
-                            <img src="https://mc-heads.net/avatar/Klocko75/40" alt="Klocko75" />
+                            <img loading="lazy" src="https://mc-heads.net/avatar/Klocko75/40" alt="Klocko75" />
                             <span>Klocko75</span>
                         </div>
                     </div>
@@ -798,7 +790,7 @@
                         </div>
                         <p class="rating-text">"Server jmel, tbndt mlyon mrh l2ne mf3l hack"</p>
                         <div class="rating-user-row">
-                            <img src="https://mc-heads.net/avatar/soopya/40" alt="soopya" />
+                            <img loading="lazy" src="https://mc-heads.net/avatar/soopya/40" alt="soopya" />
                             <span>soopya</span>
                         </div>
                     </div>
@@ -809,7 +801,7 @@
                         </div>
                         <p class="rating-text">"Genius"</p>
                         <div class="rating-user-row">
-                            <img src="https://mc-heads.net/avatar/1Tequila_/40" alt="1Tequila_" />
+                            <img loading="lazy" src="https://mc-heads.net/avatar/1Tequila_/40" alt="1Tequila_" />
                             <span>1Tequila_</span>
                         </div>
                     </div>
@@ -820,7 +812,7 @@
                         </div>
                         <p class="rating-text">"السيرفر ما يمل أبداً، كل يوم في شي جديد والإدارة متعاونة جداً 🔥"</p>
                         <div class="rating-user-row">
-                            <img src="https://mc-heads.net/avatar/Moo7e/40" alt="Moo7e" />
+                            <img loading="lazy" src="https://mc-heads.net/avatar/Moo7e/40" alt="Moo7e" />
                             <span>Moo7e</span>
                         </div>
                     </div>
@@ -831,7 +823,7 @@
                         </div>
                         <p class="rating-text">"جميل جدًا"</p>
                         <div class="rating-user-row">
-                            <img src="https://mc-heads.net/avatar/vx07/40" alt="Technoblade" />
+                            <img loading="lazy" src="https://mc-heads.net/avatar/vx07/40" alt="Technoblade" />
                             <span>vx07</span>
                         </div>
                     </div>
@@ -842,7 +834,7 @@
                         </div>
                         <p class="rating-text">"السيرفر حلو أوي"</p>
                         <div class="rating-user-row">
-                            <img src="https://mc-heads.net/avatar/xde_37/40" alt="Technoblade" />
+                            <img loading="lazy" src="https://mc-heads.net/avatar/xde_37/40" alt="Technoblade" />
                             <span>xde_37</span>
                         </div>
                     </div>
@@ -850,7 +842,7 @@
             </div>
             <div class="rate-us-cta">
                 <button class="btn-primary" id="open-rating-modal">
-                    <i class="fas fa-pen"></i> <span data-i18n="rating.cta">Leave a Rating</span>
+                    <i class="fas fa-pen"></i> <span>Leave a Rating</span>
                 </button>
             </div>
         </div>
@@ -862,8 +854,8 @@
             <div class="modal-header-visual">
                 <div class="modal-header-bg"></div>
                 <div class="modal-star-icon"><i class="fas fa-star"></i></div>
-                <h3 data-i18n="rating.formTitle">Rate Our Server</h3>
-                <p class="modal-subtitle" data-i18n="rating.formSubtitle">Your feedback helps us improve</p>
+                <h3>Rate Our Server</h3>
+                <p class="modal-subtitle">Your feedback helps us improve</p>
                 <button class="modal-close" id="close-rating-modal"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body" id="rating-form">
@@ -878,19 +870,19 @@
                     <span class="rating-label" id="rating-label">Select your rating</span>
                 </div>
                 <div class="form-group">
-                    <label><i class="fas fa-gamepad"></i> <span data-i18n="rating.username">Minecraft
+                    <label><i class="fas fa-gamepad"></i> <span>Minecraft
                             Username</span></label>
-                    <input type="text" id="rating-username" placeholder="e.g. Notch" autocomplete="off" />
+                    <input type="text" id="rating-username" placeholder="In-game name" autocomplete="off" />
                 </div>
                 <div class="form-group">
-                    <label><i class="fas fa-pen-fancy"></i> <span data-i18n="rating.review">Your Review</span></label>
+                    <label><i class="fas fa-pen-fancy"></i> <span>Your Review</span></label>
                     <textarea id="rating-review" rows="3" placeholder="What do you love about MafiaMC?"></textarea>
                 </div>
                 <div class="modal-actions-pro">
-                    <button class="btn-ghost" id="cancel-rating"><i class="fas fa-arrow-left"></i> <span
-                            data-i18n="rating.cancel">Cancel</span></button>
+                    <button class="btn-ghost" id="cancel-rating"><i class="fas fa-arrow-left"></i>
+                        <span>Cancel</span></button>
                     <button class="btn-primary btn-submit-pro" id="submit-rating">
-                        <i class="fas fa-paper-plane"></i> <span data-i18n="rating.submit">Submit Rating</span>
+                        <i class="fas fa-paper-plane"></i> <span>Submit Rating</span>
                     </button>
                 </div>
             </div>
@@ -898,8 +890,8 @@
                 <div class="success-anim">
                     <div class="success-circle"><i class="fas fa-check"></i></div>
                 </div>
-                <h3 data-i18n="rating.successTitle">Thank you for your feedback!</h3>
-                <p data-i18n="rating.successSub">Your rating has been submitted successfully</p>
+                <h3>Thank you for your feedback!</h3>
+                <p>Your rating has been submitted successfully</p>
             </div>
         </div>
     </div>
@@ -913,22 +905,22 @@
                 <div class="footer-col">
                     <h4>MafiaMC</h4>
                     <ul>
-                        <li><a href="#home" data-i18n="nav.home">Home</a></li>
-                        <li><a href="#about" data-i18n="nav.about">About</a></li>
-                        <li><a href="#team" data-i18n="nav.team">Team</a></li>
-                        <li><a href="#ratings" data-i18n="nav.ratings">Ratings</a></li>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="#ratings">Ratings</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4 data-i18n="footer.links">Links</h4>
+                    <h4>Links</h4>
                     <ul>
-                        <li><a href="https://store.mafiamc.net" data-i18n="nav.store">Store</a></li>
-                        <li><a href="https://discord.gg/DKEdc8EwtG" target="_blank" data-i18n="nav.discord">Discord</a>
+                        <li><a href="https://store.mafiamc.net" target="_blank">Store</a></li>
+                        <li><a href="https://discord.gg/DKEdc8EwtG" target="_blank">Discord</a>
                         </li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4 data-i18n="footer.follow">Follow Us</h4>
+                    <h4>Follow Us</h4>
                     <div class="footer-socials">
                         <a href="https://discord.gg/DKEdc8EwtG" target="_blank"><i class="fab fa-discord"></i></a>
                     </div>
@@ -941,11 +933,10 @@
                             <img src="https://i.ibb.co/6c0TFHT3/mafia-server.png" alt="MafiaMC" />
                             <span><span class="f-mafia">Mafia</span><span class="f-mc">MC</span> Network</span>
                         </div>
-                        <p><span data-i18n="footer.rights">&copy; 2021-2026 MafiaMC. All Rights Reserved.</span></p>
-                        <p class="footer-dev"><span data-i18n="footer.dev">Developed by Dghem</span><span
-                                class="dev-tooltip-wrapper"><sup class="dev-symbol"><a href="https://dghem.site"
-                                        target="_blank" rel="noopener noreferrer">🜲</a></sup><span class="dev-tooltip"
-                                    data-i18n="footer.owner">MafiaMC
+                        <p><span>&copy; 2021-2026 MafiaMC. All Rights Reserved.</span></p>
+                        <p class="footer-dev"><span>Developed by Dghem</span><span class="dev-tooltip-wrapper"><sup
+                                    class="dev-symbol"><a href="https://dghem.site" target="_blank"
+                                        rel="noopener noreferrer">🜲</a></sup><span class="dev-tooltip">MafiaMC
                                     Owner</span></span></p>
                     </div>
                     <div class="footer-signature-wrap" id="footer-signature-wrap">
