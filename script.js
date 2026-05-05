@@ -654,18 +654,29 @@ function initProtection() {
 }
 
 // ========================================
-// INITIALIZE
+// BLOCK FILE PROTOCOL
 // ========================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
     if (window.location.protocol === 'file:') {
+        document.title = "Access Denied";
+        const e = document.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
+        if (e) e.remove();
+        const t = document.createElement('link');
+        t.rel = 'icon';
+        t.href = 'data:image/x-icon;base64,';
+        document.head.appendChild(t);
+
         document.body.innerHTML = `
-            <div style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #000; color: #dc2626; font-family: 'Inter', sans-serif; text-align: center; padding: 20px;">
-                <i class="fas fa-shield-alt" style="font-size: 4rem; margin-bottom: 20px;"></i>
-                <h1 style="font-size: 2rem; margin-bottom: 10px; font-weight: 800;">ACCESS DENIED</h1>
-                <p style="color: #a0a0a0; max-width: 400px; line-height: 1.5;">For security reasons, this website cannot be run locally via the <strong>file://</strong> protocol. Please upload it to a web server or use a local server environment.</p>
-            </div>
+        <div style="min-height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #f9fafb; color: #111827; font-family: system-ui, -apple-system, sans-serif; text-align: center; padding: 2rem; margin: 0; position: fixed; inset: 0; z-index: 999999; box-sizing: border-box;">
+            <svg style="width: 64px; height: 64px; color: #ef4444; margin-bottom: 1.5rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <h1 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; margin-top: 0;">File Protocol is Disabled</h1>
+            <p style="color: #4b5563; max-width: 28rem; line-height: 1.5; margin-bottom: 2rem; margin-top: 0;">For security reasons and to ensure all features function correctly, this website cannot be run directly from a local file.</p>
+            <a href="https://dghem.site" style="background-color: #2563eb; color: white; text-decoration: none; padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 500; font-size: 0.875rem;">Go to Official Website</a>
+        </div>
         `;
-        throw new Error('Execution blocked: file:// protocol detected');
+        return;
     }
 
     initNavbar();
@@ -686,7 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('load', () => {
     document.body.style.opacity = '1';
-    
+
     // Main loader timeout (hide after a slight delay to allow video to buffer)
     const mainLoader = document.getElementById('main-loader');
     if (mainLoader) {
@@ -766,7 +777,7 @@ function init3DLogo() {
     const yOff = -0.5 * (bx.max.y + bx.min.y);
     const zOff = -0.5 * (bx.max.z + bx.min.z);
     geometry.translate(xOff, yOff, zOff);
-    
+
     geometry.computeBoundingBox();
     bx = geometry.boundingBox;
     const minY = bx.min.y - 0.5;
@@ -774,20 +785,20 @@ function init3DLogo() {
 
     const buildPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), minY);
 
-    const faceMat = new THREE.MeshStandardMaterial({ 
-        color: 0xee1111, 
+    const faceMat = new THREE.MeshStandardMaterial({
+        color: 0xee1111,
         metalness: 0.5,
         roughness: 0.15,
         emissive: 0x330000,
         clippingPlanes: [buildPlane],
         side: THREE.DoubleSide
     });
-    
+
     // Performance: removed double side from sideMat to save rendering
     const sideMat = new THREE.MeshStandardMaterial({
-        color: 0xffffff, 
+        color: 0xffffff,
         metalness: 0.9,
-        roughness: 0.1, 
+        roughness: 0.1,
         emissive: 0x222222,
         clippingPlanes: [buildPlane]
     });
@@ -796,7 +807,7 @@ function init3DLogo() {
     scene.add(mesh);
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-    
+
     const keyLight = new THREE.DirectionalLight(0xffffff, 1.3);
     keyLight.position.set(15, 20, 20);
     scene.add(keyLight);
@@ -818,7 +829,7 @@ function init3DLogo() {
     let hasPlayedIntro = false;
     let buildStartTime = 0;
     let isVisible = false;
-    const buildDuration = 5000; 
+    const buildDuration = 5000;
 
     document.addEventListener('mousemove', (event) => {
         if (!isVisible) return; // Save computations
@@ -838,12 +849,12 @@ function init3DLogo() {
 
     function animate() {
         requestAnimationFrame(animate);
-        
+
         // PERFORMANCE: If not visible, do not render or calculate!
         if (!isVisible) return;
-        
+
         let now = Date.now();
-        
+
         if (isBuilding) {
             let progress = (now - buildStartTime) / buildDuration;
             if (progress >= 1) {
@@ -853,22 +864,22 @@ function init3DLogo() {
                 sideMat.clippingPlanes = [];
                 renderer.localClippingEnabled = false; // Save performance
             }
-            
+
             buildPlane.constant = minY + (maxY - minY) * progress;
-            
+
             const easeOut = 1 - Math.pow(1 - progress, 3);
-            mesh.rotation.y = (1 - easeOut) * (Math.PI * 2); 
-            
+            mesh.rotation.y = (1 - easeOut) * (Math.PI * 2);
+
         } else if (hasPlayedIntro) {
             targetX = mouseX * 0.7;
             targetY = mouseY * 0.5;
 
             mesh.rotation.y += (targetX - mesh.rotation.y) * 0.1;
             mesh.rotation.x += (-targetY - mesh.rotation.x) * 0.1;
-            
+
             mesh.position.y = Math.sin(now * 0.0015) * 0.3;
         }
-        
+
         renderer.render(scene, camera);
     }
     animate();
