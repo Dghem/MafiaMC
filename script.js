@@ -4,6 +4,45 @@
    ========================================== */
 
 // ========================================
+// SECURITY & PROTOCOL CHECKS
+// ========================================
+if (window.location.protocol === 'file:') {
+    document.body.innerHTML = `
+        <div style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#050505;color:#fff;font-family:sans-serif;text-align:center;padding:20px;">
+            <i class="fas fa-shield-alt" style="font-size:4rem;color:#dc2626;margin-bottom:20px;"></i>
+            <h1 style="margin:0 0 10px 0;font-size:2rem;">Access Denied</h1>
+            <p style="color:#a0a0a0;max-width:400px;line-height:1.6;">For security reasons, this website cannot be run locally via the <strong>file://</strong> protocol. Please use a local web server (like Live Server) or upload it to a host.</p>
+        </div>
+    `;
+    throw new Error("Execution blocked: file:// protocol detected.");
+}
+
+// ========================================
+// CLOUDFLARE TURNSTILE
+// ========================================
+window.onTurnstileLoad = function () {
+    const turnstileWidget = document.getElementById('turnstile-widget');
+    if (!turnstileWidget) return;
+    
+    turnstile.render('#turnstile-widget', {
+        sitekey: '0x4AAAAAAAcfWqf3Z4XqZ4Xq', // Placeholder dummy sitekey since the user didn't provide one
+        callback: function (token) {
+            document.getElementById('cf-status').innerHTML = '<div class="cf-success-icon" style="display:flex"><i class="fas fa-check"></i></div><span>Verification successful</span>';
+            document.getElementById('cf-card').classList.add('verified');
+            
+            setTimeout(() => {
+                const overlay = document.getElementById('cf-overlay');
+                overlay.classList.add('cf-done');
+                setTimeout(() => overlay.remove(), 600);
+            }, 800);
+        },
+        'error-callback': function () {
+            document.getElementById('cf-status').innerHTML = '<span style="color:#dc2626;">Verification failed. Please refresh.</span>';
+        }
+    });
+};
+
+// ========================================
 // NOTIFICATION SYSTEM (Enhanced)
 // ========================================
 function showNotification(message, type = 'success') {
