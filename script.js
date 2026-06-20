@@ -126,16 +126,35 @@ function initHeroZoom() {
 // SCROLL FADE-IN ANIMATIONS
 // ========================================
 function initScrollAnimations() {
-    const elements = document.querySelectorAll(
-        '.info-tile, .game-card, .team-card, .rating-card-new, .banner-card, ' +
-        '.section-header-row, .statement-content, .cinematic-banner, .maintenance-card'
-    );
+    // Group elements by their closest section parent so delays are per-section
+    const selectors = [
+        '.section-header-row', '.info-tile', '.game-card', '.team-card',
+        '.rating-card-new', '.banner-card', '.statement-content', '.cinematic-banner'
+    ];
+    const allElements = document.querySelectorAll(selectors.join(', '));
 
+    // Group by parent section
+    const sectionMap = new Map();
+    allElements.forEach(el => {
+        const section = el.closest('section') || el.closest('.cinematic-section') || el.parentElement;
+        if (!sectionMap.has(section)) sectionMap.set(section, []);
+        sectionMap.get(section).push(el);
+    });
+
+    // Assign sequential delays within each section group
+    sectionMap.forEach(group => {
+        group.forEach((el, i) => {
+            el.classList.add('fade-in');
+            el.dataset.delay = i.toString();
+        });
+    });
+
+    // Use a single observer — when an element enters, trigger it with its section-local delay
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 const delay = entry.target.dataset.delay
-                    ? parseInt(entry.target.dataset.delay) * 100
+                    ? parseInt(entry.target.dataset.delay) * 80
                     : 0;
                 setTimeout(() => {
                     entry.target.classList.add('visible');
@@ -144,15 +163,11 @@ function initScrollAnimations() {
             }
         });
     }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px'
     });
 
-    elements.forEach((el, i) => {
-        el.classList.add('fade-in');
-        el.dataset.delay = (i % 6).toString();
-        observer.observe(el);
-    });
+    allElements.forEach(el => observer.observe(el));
 }
 
 // ========================================
@@ -627,6 +642,16 @@ function initSignatureParticles() {
 }
 
 // ========================================
+// PLAY NOW BUTTON (copies server IP)
+// ========================================
+function initPlayNowBtn() {
+    const playBtns = document.querySelectorAll('.game-play-btn');
+    playBtns.forEach(btn => {
+        btn.addEventListener('click', () => copyIP(btn));
+    });
+}
+
+// ========================================
 // SITE PROTECTION
 // ========================================
 function initProtection() {
@@ -691,6 +716,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initRatingModal();
     initSignatureParticles();
     initProtection();
+    initPlayNowBtn();
     initVoteAnimations();
     init3DLogo();
 });
