@@ -132,8 +132,8 @@
         }
 
         .profile-role-badge.hadmin {
-            background: linear-gradient(135deg, #374151, #1f2937);
-            color: #d1d5db;
+            background: linear-gradient(135deg, #991b1b, #7f1d1d);
+            color: #fca5a5;
         }
 
         .profile-name {
@@ -157,7 +157,22 @@
             animation: ownerShine 3s linear infinite;
         }
 
+        .profile-name .name-manager-shiny {
+            background: linear-gradient(90deg, #991b1b, #dc2626, #f87171, #dc2626, #991b1b);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: managerShine 3s linear infinite;
+        }
+
         @keyframes ownerShine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes managerShine {
             to {
                 background-position: 200% center;
             }
@@ -413,7 +428,7 @@
                 name: 'ImMosta',
                 role: 'Manager',
                 roleClass: 'hadmin',
-                nameClass: 'name-white',
+                nameClass: 'name-manager-shiny',
                 skinUser: 'saeedMaybe',
                 discord: 'hhbhnb',
                 client: {
@@ -422,7 +437,7 @@
                 },
                 description: 'The Manager of MafiaMC Network, Staffs Supervisor. Managing the server & staffs and keeping the community thriving.',
                 stats: [
-                    { value: 'H.Admin', label: 'Role' },
+                    { value: 'Manager', label: 'Role' },
                     { value: '2024', label: 'Joined Since' },
                     { value: '#2', label: 'Rank' }
                 ],
