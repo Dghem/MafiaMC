@@ -679,7 +679,7 @@ function initProtection() {
 }
 
 // ========================================
-// BLOCK FILE PROTOCOL
+// BLOCK FILE PROTOCOL (TEMPORARILY DISABLED)
 // ========================================
 document.addEventListener('DOMContentLoaded', function () {
     if (window.location.protocol === 'file:') {
