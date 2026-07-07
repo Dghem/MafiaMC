@@ -136,6 +136,11 @@
             color: #fca5a5;
         }
 
+        .profile-role-badge.helper {
+            background: linear-gradient(135deg, #9ca3af, #6b7280);
+            color: #f3f4f6;
+        }
+
         .profile-name {
             font-size: clamp(3rem, 6vw, 4.5rem);
             font-weight: 900;
@@ -164,6 +169,21 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: managerShine 3s linear infinite;
+        }
+
+        .profile-name .name-helper-shiny {
+            background: linear-gradient(90deg, #6b7280, #9ca3af, #e5e7eb, #9ca3af, #6b7280);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: helperShine 3s linear infinite;
+        }
+
+        @keyframes helperShine {
+            to {
+                background-position: 200% center;
+            }
         }
 
         @keyframes ownerShine {
@@ -445,6 +465,26 @@
                     { icon: 'fas fa-home', label: 'Home', href: 'index.html', class: 'primary' },
                     { icon: 'fab fa-discord', label: 'Discord', href: 'https://discord.gg/DKEdc8EwtG', class: 'discord-btn', target: '_blank' }
                 ]
+            },
+            'alghobashi': {
+                name: 'Alghobashi',
+                role: 'Helper',
+                roleClass: 'helper',
+                nameClass: 'name-helper-shiny',
+                skinUser: 'Alghobashi',
+                model: 'slim',
+                discord: 'Alghobashi',
+                description: 'A dedicated Helper of MafiaMC Network, always ready to assist players and keep the community running smoothly.',
+                stats: [
+                    { value: 'Helper', label: 'Role' },
+                    { value: '2026', label: 'Joined Since' },
+                    { value: '#6', label: 'Rank' }
+                ],
+                links: [
+                    { icon: 'fas fa-home', label: 'Home', href: 'index.html', class: 'primary' },
+                    { icon: 'fab fa-discord', label: 'Discord', href: 'https://discord.gg/VJpsywezvy', class: 'discord-btn', target: '_blank' },
+                    { icon: 'fab fa-youtube', label: 'YouTube', href: 'https://www.youtube.com/@Alghobashy', class: 'youtube-btn', target: '_blank' }
+                ]
             }
         };
 
@@ -468,12 +508,14 @@
             const isMobile = window.innerWidth <= 768;
             try {
                 const canvas = document.getElementById('skin-canvas');
-                const skinViewer = new skinview3d.SkinViewer({
+                const skinViewerOpts = {
                     canvas: canvas,
                     width: isMobile ? 280 : 320,
                     height: isMobile ? 420 : 480,
                     skin: `https://mineskin.eu/skin/${player.skinUser}`
-                });
+                };
+                if (player.model) skinViewerOpts.model = player.model;
+                const skinViewer = new skinview3d.SkinViewer(skinViewerOpts);
 
                 // Load OptiFine cape via weserv.nl image proxy (handles CORS properly)
                 const capeUrl = `https://images.weserv.nl/?url=s.optifine.net/capes/${player.skinUser}.png`;
