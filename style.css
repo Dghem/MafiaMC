@@ -862,6 +862,11 @@ a {
     color: #fca5a5;
 }
 
+.helper-role {
+    background: linear-gradient(135deg, #9ca3af, #6b7280);
+    color: #f3f4f6;
+}
+
 /* ========================================
    SERVER GAMES
    ======================================== */
